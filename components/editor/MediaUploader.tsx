@@ -32,9 +32,9 @@ export function MediaUploader({
   }, [currentMediaUrl]);
 
   const getAcceptTypes = () => {
-    if (mediaType === 'audio') return 'audio/*';
+    if (mediaType === 'audio') return 'audio/mpeg,.mp3';
     if (mediaType === 'video') return 'video/*';
-    return 'audio/*,video/*';
+    return 'audio/mpeg,.mp3,video/*';
   };
 
   const getFileTypeLabel = () => {
@@ -48,11 +48,11 @@ export function MediaUploader({
     if (!file) return;
 
     // Check file type
-    const isAudioFile = file.type.startsWith('audio/');
+    const isAudioFile = file.type === 'audio/mpeg' || file.type === 'audio/mp3' || file.name.toLowerCase().endsWith('.mp3');
     const isVideoFile = file.type.startsWith('video/');
     
     if (mediaType === 'audio' && !isAudioFile) {
-      enqueueSnackbar('กรุณาเลือกไฟล์เสียง (MP3, WAV, OGG, M4A)', { variant: 'error' });
+      enqueueSnackbar('กรุณาเลือกไฟล์ MP3 เท่านั้น', { variant: 'error' });
       return;
     }
     
@@ -117,7 +117,7 @@ export function MediaUploader({
     preview && 
     typeof preview === 'string' && 
     preview.length > 0 &&
-    (preview.includes('.mp3') || preview.includes('.wav') || preview.includes('.ogg') || preview.includes('.m4a') || preview.includes('audio'))
+    (preview.includes('.mp3') || preview.includes('audio'))
   );
   
   const isVideo = Boolean(
@@ -256,10 +256,10 @@ export function MediaUploader({
                   </Typography>
                   <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
                     {mediaType === 'audio' 
-                      ? 'รองรับ MP3, WAV, OGG, M4A (สูงสุด 50MB)'
+                      ? 'รองรับ MP3 (สูงสุด 50MB)'
                       : mediaType === 'video'
                       ? 'รองรับ MP4, WebM, MOV (สูงสุด 50MB)'
-                      : 'รองรับ MP3, MP4, WAV, WebM (สูงสุด 50MB)'
+                      : 'รองรับ MP3, MP4 (สูงสุด 50MB)'
                     }
                   </Typography>
                 </>
