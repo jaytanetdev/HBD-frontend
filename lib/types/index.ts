@@ -16,7 +16,7 @@ export enum GameType {
 export interface User {
   id: string;
   username: string;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export interface Theme {
