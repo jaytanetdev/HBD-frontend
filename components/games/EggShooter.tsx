@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface Egg {
   id: number;
   x: number;
+  y?: number;
   speed: number;
   emoji: string;
 }
